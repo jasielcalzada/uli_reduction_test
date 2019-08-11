@@ -1,0 +1,26 @@
+﻿.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: 1px solid white;
+    background: white url(images/ui-bg_glass_80_d7ebf9_1x400.png) 50% 50% repeat-x;
+    font-weight: bold;
+    color: black;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: 1px solid #f9dd34;
+    background: #ffef8f url(images/ui-bg_highlight-soft_25_ffef8f_1x100.png) 50% top repeat-x;
+    color: #363636;
+}
+
+.ui-widget-content {
+    border: 1px solid #c3e6cb;
+    background: #c3e6cb url(images/ui-bg_highlight-hard_100_f2f5f7_1x100.png) 50% top repeat-x;
+    color: black;
+}
+
+.ui-widget-content .ui-pg-input{
+    background-color:white;
+}
+
+.ui-widget-content .ui-pg-selbox{
+    background-color:white;
+}

@@ -1,0 +1,340 @@
+<html>
+<head>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+        <style>
+            td.details-control {
+                background: url('details_open.png') no-repeat center center;
+                cursor: pointer;
+            }
+            tr.shown td.details-control {
+                background: url('details_close.png') no-repeat center center;
+            }
+        </style>
+</head>
+<boby>
+    <h5>DataTable</h5>
+    <div class="col-lg-2" style="text-align: left;">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="check_expand_all">
+                <label class="custom-control-label" for="check_expand_all">Expand all</label>
+            </div>                                     
+        </div>
+        <div class="col-lg-2" style="text-align: left;">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="check_show_all">
+                <label class="custom-control-label" for="check_show_all">Show all</label>
+            </div>
+    </div>
+    <table id="table_detail_case" class="display" style="width:100%"></table>
+    <div id="save"></div>
+
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+        <script>
+            var table;
+            var data_ = [
+                    {CASE_NUM:"229","REASON_ID":"Dealer reduces PO","SOLVE_BEFORE":"Apr 24, 2019","TOTAL_SHIPMENT":1,"TOTAL_PO":2,"TOTAL_PART":1,"STATUS_CASE":"654","CREATED_ON":"Aug 02, 2019 04:29 PM","CREATED_BY":"Diana Manzano","UPDATED_BY":"","VALUES_ENTER":null,"LOAD_EFF_MIN":60.5,"TIME_ELAPSED":"2 Day 52 hr 18 min","SOLVE_BEFORE_PASS":"0","GET_DETAIL_CASE":[{"ID_CASE_DET":"1157","ID_CASE_H":"229","ULI":"FDS201921000027","MASTER_DO":"1141547","ORIGINAL_LE":"100","ORIGINAL_QTY":"260","NEW_LE":"100","NEW_QTY":"260","SHIPMENT_TYPE":"FDS","OTAY_IN":"5/23/2019 12:00:00 AM","OTAY_IN_NEW":"","MASTER_STATUS_ID":"312","MASTER_AFECTED_ID":"","CREATED_ON":"8/2/2019 4:29:06 PM","CREATED_BY":"","UPDATED_ON":"","UPDATED_BY":"","GET_SUB_DETAIL_CASE":[{"ID_CASE_H":"229","ID_CASE_D":"1157","ID_CASE_SD":"8558","DO_ID":"1699501","PRODUCT_CODE":"","PART_NUMBER":"F18933800","SONY_PO":"PO123","SONY_PO_QTY":"260","QTY":"260","LE":"100","LE_NEW":"100","QTY_NEW":"260","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY #715","STATE":"NJ","MODEL":"XBR-65X850F CHH SV-34066 UC2","DO_STATUS_ACTUAL":"312","DO_STATUS_NEW":"","LINE_ITEM_NUM":"30","ALLOW_MODIFY":"0","LP":"250"}]},{"ID_CASE_DET":"1158","ID_CASE_H":"229","ULI":"FDS201921000029","MASTER_DO":"1141541","ORIGINAL_LE":"100","ORIGINAL_QTY":"240","NEW_LE":"100","NEW_QTY":"240","SHIPMENT_TYPE":"FDS","OTAY_IN":"5/23/2019 12:00:00 AM","OTAY_IN_NEW":"","MASTER_STATUS_ID":"313","MASTER_AFECTED_ID":"","CREATED_ON":"8/2/2019 4:29:06 PM","CREATED_BY":"","UPDATED_ON":"","UPDATED_BY":"","GET_SUB_DETAIL_CASE":[{"ID_CASE_H":"229","ID_CASE_D":"1158","ID_CASE_SD":"8559","DO_ID":"1699463","PRODUCT_CODE":"","PART_NUMBER":"F18924800","SONY_PO":"PO123","SONY_PO_QTY":"240","QTY":"240","LE":"100","LE_NEW":"100","QTY_NEW":"240","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"TECH DATA CANADA CORPORATION","STATE":"ON","MODEL":"XBR-65X900F CU SV-34038 UC2","DO_STATUS_ACTUAL":"313","DO_STATUS_NEW":"","LINE_ITEM_NUM":"30","ALLOW_MODIFY":"0","LP":"250"}]},{"ID_CASE_DET":"1159","ID_CASE_H":"229","ULI":"MST201921000028","MASTER_DO":"1141543","ORIGINAL_LE":"63.27","ORIGINAL_QTY":"360","NEW_LE":"63.27","NEW_QTY":"360","SHIPMENT_TYPE":"MST","OTAY_IN":"5/23/2019 12:00:00 AM","OTAY_IN_NEW":"","MASTER_STATUS_ID":"313","MASTER_AFECTED_ID":"","CREATED_ON":"8/2/2019 4:29:06 PM","CREATED_BY":"","UPDATED_ON":"","UPDATED_BY":"","GET_SUB_DETAIL_CASE":[{"ID_CASE_H":"229","ID_CASE_D":"1159","ID_CASE_SD":"8560","DO_ID":"1699465","PRODUCT_CODE":"","PART_NUMBER":"F18748100","SONY_PO":"PO123","SONY_PO_QTY":"32","QTY":"32","LE":"0","LE_NEW":"0","QTY_NEW":"32","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CO., INC. #87","STATE":"OH","MODEL":"KDL-40W650D QW SV-30021 UC2","DO_STATUS_ACTUAL":"313","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"0","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1159","ID_CASE_SD":"8561","DO_ID":"1699467","PRODUCT_CODE":"","PART_NUMBER":"F18856800","SONY_PO":"PO123","SONY_PO_QTY":"168","QTY":"168","LE":"0","LE_NEW":"0","QTY_NEW":"168","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CO., INC. #87","STATE":"OH","MODEL":"XBR-43X800E KF SV-32010 UC2","DO_STATUS_ACTUAL":"313","DO_STATUS_NEW":"","LINE_ITEM_NUM":"20","ALLOW_MODIFY":"0","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1159","ID_CASE_SD":"8562","DO_ID":"1699469","PRODUCT_CODE":"","PART_NUMBER":"F18933800","SONY_PO":"PO123","SONY_PO_QTY":"106","QTY":"106","LE":"40.77","LE_NEW":"40.77","QTY_NEW":"106","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY #715","STATE":"NJ","MODEL":"XBR-65X850F CHH SV-34066 UC2","DO_STATUS_ACTUAL":"313","DO_STATUS_NEW":"","LINE_ITEM_NUM":"30","ALLOW_MODIFY":"0","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1159","ID_CASE_SD":"8563","DO_ID":"1699471","PRODUCT_CODE":"","PART_NUMBER":"F18924800","SONY_PO":"PO123","SONY_PO_QTY":"54","QTY":"54","LE":"22.50","LE_NEW":"22.50","QTY_NEW":"54","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY #715","STATE":"NJ","MODEL":"XBR-65X900F CU SV-34038 UC2","DO_STATUS_ACTUAL":"313","DO_STATUS_NEW":"","LINE_ITEM_NUM":"20","ALLOW_MODIFY":"0","LP":"250"}]},{"ID_CASE_DET":"1160","ID_CASE_H":"229","ULI":"Z07201917000017","MASTER_DO":"1141539","ORIGINAL_LE":"69.21","ORIGINAL_QTY":"280","NEW_LE":"69.21","NEW_QTY":"280","SHIPMENT_TYPE":"ZONE","OTAY_IN":"4/27/2019 12:00:00 AM","OTAY_IN_NEW":"","MASTER_STATUS_ID":"314","MASTER_AFECTED_ID":"","CREATED_ON":"8/2/2019 4:29:06 PM","CREATED_BY":"","UPDATED_ON":"","UPDATED_BY":"","GET_SUB_DETAIL_CASE":[{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8564","DO_ID":"1699431","PRODUCT_CODE":"","PART_NUMBER":"F18933500","SONY_PO":"PO123","SONY_PO_QTY":"6","QTY":"6","LE":"0.85","LE_NEW":"0.85","QTY_NEW":"6","RDD":"5/3/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CANADA LTD.","STATE":"ON","MODEL":"KD-43X750F  CH SV-34063 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"20","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8565","DO_ID":"1699461","PRODUCT_CODE":"","PART_NUMBER":"F18933500","SONY_PO":"PO123","SONY_PO_QTY":"36","QTY":"36","LE":"5.08","LE_NEW":"5.08","QTY_NEW":"36","RDD":"4/25/2019 12:00:00 AM","PARTNER_NAME":"COSTCO STORE # 00559","STATE":"ON","MODEL":"KD-43X750F  CH SV-34063 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8566","DO_ID":"1699445","PRODUCT_CODE":"","PART_NUMBER":"F18933300","SONY_PO":"PO123","SONY_PO_QTY":"58","QTY":"58","LE":"11.31","LE_NEW":"11.31","QTY_NEW":"58","RDD":"5/3/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CANADA LTD.","STATE":"ON","MODEL":"KD-55X750F  CH SV-34061 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8567","DO_ID":"1699445","PRODUCT_CODE":"","PART_NUMBER":"F18933300","SONY_PO":"PO123","SONY_PO_QTY":"19","QTY":"19","LE":"3.70","LE_NEW":"3.70","QTY_NEW":"19","RDD":"5/3/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CANADA LTD.","STATE":"ON","MODEL":"KD-55X750F  CH SV-34061 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"20","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8568","DO_ID":"1699459","PRODUCT_CODE":"","PART_NUMBER":"F18933300","SONY_PO":"PO123","SONY_PO_QTY":"42","QTY":"42","LE":"8.19","LE_NEW":"8.19","QTY_NEW":"42","RDD":"4/25/2019 12:00:00 AM","PARTNER_NAME":"COSTCO STORE # 00559","STATE":"ON","MODEL":"KD-55X750F  CH SV-34061 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8569","DO_ID":"1699443","PRODUCT_CODE":"","PART_NUMBER":"F18748200","SONY_PO":"PO123","SONY_PO_QTY":"12","QTY":"12","LE":"0.84","LE_NEW":"0.84","QTY_NEW":"12","RDD":"5/3/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CANADA LTD.","STATE":"ON","MODEL":"KDL-32W600D QW SV-30022 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8570","DO_ID":"1699451","PRODUCT_CODE":"","PART_NUMBER":"F18748000","SONY_PO":"PO123","SONY_PO_QTY":"12","QTY":"12","LE":"2.05","LE_NEW":"2.05","QTY_NEW":"12","RDD":"4/28/2019 12:00:00 AM","PARTNER_NAME":"TECH DATA CANADA CORPORATION","STATE":"ON","MODEL":"KDL-48W650D QW SV-30020 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"30","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8571","DO_ID":"1699449","PRODUCT_CODE":"","PART_NUMBER":"F18856600","SONY_PO":"PO123","SONY_PO_QTY":"12","QTY":"12","LE":"2.20","LE_NEW":"2.20","QTY_NEW":"12","RDD":"4/28/2019 12:00:00 AM","PARTNER_NAME":"TECH DATA CANADA CORPORATION","STATE":"ON","MODEL":"XBR-49X800E KF SV-32008 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"60","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8572","DO_ID":"1699447","PRODUCT_CODE":"","PART_NUMBER":"F18935000","SONY_PO":"PO123","SONY_PO_QTY":"12","QTY":"12","LE":"2.37","LE_NEW":"2.37","QTY_NEW":"12","RDD":"4/28/2019 12:00:00 AM","PARTNER_NAME":"TECH DATA CANADA CORPORATION","STATE":"ON","MODEL":"XBR-49X900F CU SV-34078 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8573","DO_ID":"1699453","PRODUCT_CODE":"","PART_NUMBER":"F18934600","SONY_PO":"PO123","SONY_PO_QTY":"6","QTY":"6","LE":"1.35","LE_NEW":"1.35","QTY_NEW":"6","RDD":"4/28/2019 12:00:00 AM","PARTNER_NAME":"TECH DATA CANADA CORPORATION","STATE":"ON","MODEL":"XBR-55A8F   CR SV-34074 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8574","DO_ID":"1699455","PRODUCT_CODE":"","PART_NUMBER":"F18934800","SONY_PO":"PO123","SONY_PO_QTY":"6","QTY":"6","LE":"1.59","LE_NEW":"1.59","QTY_NEW":"6","RDD":"4/28/2019 12:00:00 AM","PARTNER_NAME":"TECH DATA CANADA CORPORATION","STATE":"ON","MODEL":"XBR-55A9F CS SV-34076 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"20","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8575","DO_ID":"1699441","PRODUCT_CODE":"","PART_NUMBER":"F18924900","SONY_PO":"PO123","SONY_PO_QTY":"1","QTY":"1","LE":"0.24","LE_NEW":"0.24","QTY_NEW":"1","RDD":"5/3/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CANADA LTD.","STATE":"ON","MODEL":"XBR-55X900F CU SV-34039 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"20","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8576","DO_ID":"1699429","PRODUCT_CODE":"","PART_NUMBER":"F18934700","SONY_PO":"BPVW06_201904","SONY_PO_QTY":"4","QTY":"4","LE":"1.67","LE_NEW":"1.67","QTY_NEW":"4","RDD":"5/3/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CANADA LTD.","STATE":"ON","MODEL":"XBR-65A9F CS SV-34075 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"0","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8577","DO_ID":"1699433","PRODUCT_CODE":"","PART_NUMBER":"F18935200","SONY_PO":"PO123","SONY_PO_QTY":"5","QTY":"5","LE":"2.08","LE_NEW":"2.08","QTY_NEW":"5","RDD":"5/3/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CANADA LTD.","STATE":"ON","MODEL":"XBR-65Z9F CX SV-34080 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8578","DO_ID":"1699439","PRODUCT_CODE":"","PART_NUMBER":"F18934000","SONY_PO":"PO123","SONY_PO_QTY":"4","QTY":"4","LE":"1.79","LE_NEW":"1.79","QTY_NEW":"4","RDD":"5/3/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CANADA LTD.","STATE":"ON","MODEL":"XBR-70X830F CHM SV-34068 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8579","DO_ID":"1699457","PRODUCT_CODE":"","PART_NUMBER":"F18934000","SONY_PO":"PO123","SONY_PO_QTY":"36","QTY":"36","LE":"16.07","LE_NEW":"16.07","QTY_NEW":"36","RDD":"4/25/2019 12:00:00 AM","PARTNER_NAME":"COSTCO STORE # 00559","STATE":"ON","MODEL":"XBR-70X830F CHM SV-34068 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8580","DO_ID":"1699435","PRODUCT_CODE":"","PART_NUMBER":"F18933700","SONY_PO":"PO123","SONY_PO_QTY":"4","QTY":"4","LE":"2.08","LE_NEW":"2.08","QTY_NEW":"4","RDD":"5/3/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CANADA LTD.","STATE":"ON","MODEL":"XBR-75X850F CHH SV-34065 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"20","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1160","ID_CASE_SD":"8581","DO_ID":"1699437","PRODUCT_CODE":"","PART_NUMBER":"F18934900","SONY_PO":"PO123","SONY_PO_QTY":"5","QTY":"5","LE":"5.75","LE_NEW":"5.75","QTY_NEW":"5","RDD":"5/3/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CANADA LTD.","STATE":"ON","MODEL":"XBR-85X900F UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"}]},{"ID_CASE_DET":"1161","ID_CASE_H":"229","ULI":"Z07201921000032","MASTER_DO":"1141545","ORIGINAL_LE":"71.82","ORIGINAL_QTY":"250","NEW_LE":"71.82","NEW_QTY":"250","SHIPMENT_TYPE":"ZONE","OTAY_IN":"5/23/2019 12:00:00 AM","OTAY_IN_NEW":"","MASTER_STATUS_ID":"314","MASTER_AFECTED_ID":"","CREATED_ON":"8/2/2019 4:29:07 PM","CREATED_BY":"","UPDATED_ON":"","UPDATED_BY":"","GET_SUB_DETAIL_CASE":[{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8582","DO_ID":"1699485","PRODUCT_CODE":"","PART_NUMBER":"F18933500","SONY_PO":"PO123","SONY_PO_QTY":"15","QTY":"15","LE":"2.12","LE_NEW":"2.12","QTY_NEW":"15","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"MONTREAL DIS. CENTRE","STATE":"QC","MODEL":"KD-43X750F  CH SV-34063 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8583","DO_ID":"1699487","PRODUCT_CODE":"","PART_NUMBER":"F18933400","SONY_PO":"PO123","SONY_PO_QTY":"10","QTY":"10","LE":"1.60","LE_NEW":"1.60","QTY_NEW":"10","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"MONTREAL DIS. CENTRE","STATE":"QC","MODEL":"KD-49X750F  CH SV-34062 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8584","DO_ID":"1699483","PRODUCT_CODE":"","PART_NUMBER":"F18933300","SONY_PO":"PO123","SONY_PO_QTY":"6","QTY":"6","LE":"1.17","LE_NEW":"1.17","QTY_NEW":"6","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"MONTREAL DIS. CENTRE","STATE":"QC","MODEL":"KD-55X750F  CH SV-34061 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"20","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8585","DO_ID":"1699483","PRODUCT_CODE":"","PART_NUMBER":"F18933300","SONY_PO":"PO123","SONY_PO_QTY":"17","QTY":"17","LE":"3.31","LE_NEW":"3.31","QTY_NEW":"17","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"MONTREAL DIS. CENTRE","STATE":"QC","MODEL":"KD-55X750F  CH SV-34061 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8586","DO_ID":"1699489","PRODUCT_CODE":"","PART_NUMBER":"F18748200","SONY_PO":"PO123","SONY_PO_QTY":"13","QTY":"13","LE":"0.91","LE_NEW":"0.91","QTY_NEW":"13","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"MONTREAL DIS. CENTRE","STATE":"QC","MODEL":"KDL-32W600D QW SV-30022 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8587","DO_ID":"1699475","PRODUCT_CODE":"","PART_NUMBER":"F18856600","SONY_PO":"PO123","SONY_PO_QTY":"37","QTY":"37","LE":"6.78","LE_NEW":"6.78","QTY_NEW":"37","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"MONTREAL DIS. CENTRE","STATE":"QC","MODEL":"XBR-49X800E KF SV-32008 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8588","DO_ID":"1699477","PRODUCT_CODE":"","PART_NUMBER":"F18856400","SONY_PO":"PO123","SONY_PO_QTY":"30","QTY":"30","LE":"6.21","LE_NEW":"6.21","QTY_NEW":"30","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"MONTREAL DIS. CENTRE","STATE":"QC","MODEL":"XBR-55X800E KF SV-32006 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8589","DO_ID":"1699499","PRODUCT_CODE":"","PART_NUMBER":"F18934500","SONY_PO":"PO123","SONY_PO_QTY":"26","QTY":"26","LE":"10","LE_NEW":"10","QTY_NEW":"26","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CANADA LTD.","STATE":"ON","MODEL":"XBR-65A8F   CR SV-34073 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8590","DO_ID":"1699479","PRODUCT_CODE":"","PART_NUMBER":"F18934500","SONY_PO":"PO123","SONY_PO_QTY":"10","QTY":"10","LE":"3.85","LE_NEW":"3.85","QTY_NEW":"10","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"MONTREAL DIS. CENTRE","STATE":"QC","MODEL":"XBR-65A8F   CR SV-34073 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8591","DO_ID":"1699495","PRODUCT_CODE":"","PART_NUMBER":"F18934700","SONY_PO":"PO123","SONY_PO_QTY":"6","QTY":"6","LE":"2.50","LE_NEW":"2.50","QTY_NEW":"6","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"TECH DATA CANADA CORPORATION","STATE":"ON","MODEL":"XBR-65A9F CS SV-34075 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"40","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8592","DO_ID":"1699497","PRODUCT_CODE":"","PART_NUMBER":"F18933800","SONY_PO":"PO123","SONY_PO_QTY":"52","QTY":"52","LE":"20","LE_NEW":"20","QTY_NEW":"52","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CANADA LTD.","STATE":"ON","MODEL":"XBR-65X850F CHH SV-34066 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8593","DO_ID":"1699473","PRODUCT_CODE":"","PART_NUMBER":"F18933800","SONY_PO":"PO123","SONY_PO_QTY":"21","QTY":"21","LE":"8.08","LE_NEW":"8.08","QTY_NEW":"21","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"MONTREAL DIS. CENTRE","STATE":"QC","MODEL":"XBR-65X850F CHH SV-34066 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8594","DO_ID":"1699493","PRODUCT_CODE":"","PART_NUMBER":"F18935200","SONY_PO":"PO123","SONY_PO_QTY":"2","QTY":"2","LE":"0.83","LE_NEW":"0.83","QTY_NEW":"2","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"MONTREAL DIS. CENTRE","STATE":"QC","MODEL":"XBR-65Z9F CX SV-34080 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8595","DO_ID":"1699491","PRODUCT_CODE":"","PART_NUMBER":"F18934000","SONY_PO":"PO123","SONY_PO_QTY":"2","QTY":"2","LE":"0.89","LE_NEW":"0.89","QTY_NEW":"2","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"MONTREAL DIS. CENTRE","STATE":"QC","MODEL":"XBR-70X830F CHM SV-34068 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1161","ID_CASE_SD":"8596","DO_ID":"1699481","PRODUCT_CODE":"","PART_NUMBER":"F18933600","SONY_PO":"PO123","SONY_PO_QTY":"3","QTY":"3","LE":"3.57","LE_NEW":"3.57","QTY_NEW":"3","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"MONTREAL DIS. CENTRE","STATE":"QC","MODEL":"XBR-85X850F CHH SV-34064 UC2","DO_STATUS_ACTUAL":"314","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"1","LP":"250"}]},{"ID_CASE_DET":"1162","ID_CASE_H":"229","ULI":"ZMS201921000031","MASTER_DO":"1141549","ORIGINAL_LE":"26.75","ORIGINAL_QTY":"410","NEW_LE":"26.75","NEW_QTY":"410","SHIPMENT_TYPE":"ZMS","OTAY_IN":"5/23/2019 12:00:00 AM","OTAY_IN_NEW":"","MASTER_STATUS_ID":"312","MASTER_AFECTED_ID":"","CREATED_ON":"8/2/2019 4:29:07 PM","CREATED_BY":"","UPDATED_ON":"","UPDATED_BY":"","GET_SUB_DETAIL_CASE":[{"ID_CASE_H":"229","ID_CASE_D":"1162","ID_CASE_SD":"8597","DO_ID":"1699509","PRODUCT_CODE":"","PART_NUMBER":"F18933200","SONY_PO":"PO123","SONY_PO_QTY":"3","QTY":"3","LE":"0","LE_NEW":"0","QTY_NEW":"3","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY #715","STATE":"NJ","MODEL":"KD-65X750F  CH SV-34060 UC2","DO_STATUS_ACTUAL":"312","DO_STATUS_NEW":"","LINE_ITEM_NUM":"40","ALLOW_MODIFY":"0","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1162","ID_CASE_SD":"8598","DO_ID":"1699509","PRODUCT_CODE":"","PART_NUMBER":"F18933200","SONY_PO":"PO123","SONY_PO_QTY":"28","QTY":"28","LE":"0","LE_NEW":"0","QTY_NEW":"28","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY #715","STATE":"NJ","MODEL":"KD-65X750F  CH SV-34060 UC2","DO_STATUS_ACTUAL":"312","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"0","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1162","ID_CASE_SD":"8599","DO_ID":"1699505","PRODUCT_CODE":"","PART_NUMBER":"F18748100","SONY_PO":"PO123","SONY_PO_QTY":"30","QTY":"30","LE":"3.33","LE_NEW":"3.33","QTY_NEW":"30","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CO., INC #717","STATE":"GA","MODEL":"KDL-40W650D QW SV-30021 UC2","DO_STATUS_ACTUAL":"312","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"0","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1162","ID_CASE_SD":"8600","DO_ID":"1699507","PRODUCT_CODE":"","PART_NUMBER":"F18748000","SONY_PO":"PO123","SONY_PO_QTY":"9","QTY":"9","LE":"1.54","LE_NEW":"1.54","QTY_NEW":"9","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CO., INC #717","STATE":"GA","MODEL":"KDL-48W650D QW SV-30020 UC2","DO_STATUS_ACTUAL":"312","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"0","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1162","ID_CASE_SD":"8601","DO_ID":"1699503","PRODUCT_CODE":"","PART_NUMBER":"F18856800","SONY_PO":"PO123","SONY_PO_QTY":"196","QTY":"196","LE":"21.88","LE_NEW":"21.88","QTY_NEW":"196","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"BEST BUY CO., INC #717","STATE":"GA","MODEL":"XBR-43X800E KF SV-32010 UC2","DO_STATUS_ACTUAL":"312","DO_STATUS_NEW":"","LINE_ITEM_NUM":"20","ALLOW_MODIFY":"0","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1162","ID_CASE_SD":"8602","DO_ID":"1699513","PRODUCT_CODE":"","PART_NUMBER":"F18924910","SONY_PO":"PO123","SONY_PO_QTY":"120","QTY":"120","LE":"0","LE_NEW":"0","QTY_NEW":"120","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"AMAZON.COM.DEDC LLC","STATE":"WA","MODEL":"XBR55X900F/ CU SV-34039 AUC2","DO_STATUS_ACTUAL":"312","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"0","LP":"250"},{"ID_CASE_H":"229","ID_CASE_D":"1162","ID_CASE_SD":"8603","DO_ID":"1699511","PRODUCT_CODE":"","PART_NUMBER":"F18973620","SONY_PO":"PO123","SONY_PO_QTY":"24","QTY":"24","LE":"0","LE_NEW":"0","QTY_NEW":"24","RDD":"5/20/2019 12:00:00 AM","PARTNER_NAME":"COSTCO - MIRA LOMA","STATE":"CA","MODEL":"","DO_STATUS_ACTUAL":"312","DO_STATUS_NEW":"","LINE_ITEM_NUM":"10","ALLOW_MODIFY":"0","LP":"250"}]}],"GET_SUGGESTION_CASE":[{"ID_QTYREDUCE":"165","IN_ID_CASE_NUM":"229","IN_PART_NUMBER":"F18933500","IN_MODEL":"KD-43X750F  CH SV-34063 UC2","IN_QTY_REDUCE":"5","IN_CREATED_BY":"DIANA MANZANO","CREATED_ON":"8/2/2019 4:29:07 PM","IN_UPDATED_ON":"","IN_UPDATED_BY":""}]}
+            ];
+            
+            $(document).ready(function(){         
+                var case_detail = data_[0]["GET_DETAIL_CASE"];
+                console.log(case_detail)
+
+                table = $('#table_detail_case').DataTable({
+                    data: case_detail,
+                    "paging": false,
+                    "searching": false,
+                    processing: true,
+                    bprocessing: true,
+                    destroy: true,
+                    dom: 'Blfrtip',
+                    "scrollY": "470px",
+                    "scrollX": false,
+                    "scrollCollapse": true,
+                    columns: [
+                        {
+                            "className": 'details-control',
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": ''
+                        },
+                        { title: "Master", data: "MASTER_DO" },
+                        { title: "ULI", data: "ULI" },
+                        { title: "SHIPMENT TYPE", data: "SHIPMENT_TYPE" },
+                        { title: "OTAY IN", data: "OTAY_IN" },
+                        { title: "MASTER STATUS", data: "MASTER_STATUS_ID" },
+                        { title: "ORIGINAL LE", data: "ORIGINAL_LE" },
+                        //{ title: "NEW LE", data: "NEW_LE" },
+                        {
+                            title: "NEW LE",
+                            data: null,
+                            render: function (data, type, row) {
+                                var new_le_h = row.NEW_LE;
+                                var lbl_new_le_header = '<label id="lblnewleheader' + row.ID_CASE_DET + '">' + new_le_h + '</label>';
+                                return lbl_new_le_header;
+                            }
+                        },
+                        { title: "ORIGINAL QTY", data: "ORIGINAL_QTY" },          
+                        {
+                            title: "NEW QTY",
+                            data: null,
+                            render: function (data, type, row) {
+                                var new_qty_h = row.NEW_QTY
+                                var lbl_new_qty_h = '<label id="lblnewqtyheader' + row.ID_CASE_DET + '">' + new_qty_h + '</label>';
+                                return lbl_new_qty_h;
+                            }
+                        },
+                        //{ title: "OTAY IN", data: "OTAY_IN" },
+                        //{ title: "OTAY IN NEW", data: "OTAY_IN_NEW" },            
+                        //{ title: "MASTER AFECTED ID", data: "MASTER_AFECTED_ID" },
+                        //{ title: "CREATED ON", data: "CREATED_ON" },
+                        //{ title: "CREATED BY", data: "CREATED_BY" },
+                        //{ title: "UPDATED ON", data: "UPDATED_ON" },
+                        //{ title: "UPDATED BY", data: "UPDATED_BY" }
+                    ]
+                });
+                $(document).on('click', 'td.details-control', function () {
+                    var tr = $(this).closest('tr');
+                    var row = table.row(tr);
+                    if (row.child.isShown()) {
+                        // This row is already open - close it
+                        row.child.hide();
+                        tr.removeClass('shown');
+
+                        /***08/05/2019***************************************/
+                        var header = row.data();
+                        var detail = row.data().GET_SUB_DETAIL_CASE;
+                        var total_new_qty = 0;
+                        var data = [];
+                        $.each(detail, function (index, value) {
+                            data.push({valores:$("#save").data('#' + header.ID_CASE_DET + value.ID_CASE_SD)});
+                        });
+                        alert(JSON.stringify(data));
+                        //JSON.parse(data).map(function (item, i) {
+                        $.each(data, function (index, value) {
+                            var temp = value.valores
+                            total_new_qty +=  parseInt(temp);
+
+                        });
+                        //alert(total_new_qty);
+                        /******************************************/
+                    } else {
+                        // Open this row
+                        var header = row.data();
+                        var detail = row.data().GET_SUB_DETAIL_CASE;
+                    
+                        row.child(format(row.data())).show();
+                        $.each(detail, function (index, value) {
+
+                            $('.' + header.ID_CASE_DET).append('<tr class="' + value.ID_CASE_SD + '"><td scope="col">' + value.MODEL + '</td><td scope="col">' + value.SONY_PO + '</td><td scope="col">' + value.PARTNER_NAME + '</td><td scope="col">' + value.STATE + '</td><td scope="col">' + value.RDD + '</td><td scope="col">' + value.LE + '</td><td scope="col"> <label id="lblnewle' + value.ID_CASE_SD + '"></label> </td><td scope="col">' + value.SONY_PO_QTY + '</td> <td scope="col"><input id="' + header.ID_CASE_DET + value.ID_CASE_SD + '"  onkeyup="get_new_le_detail(' + "'" + value.ID_CASE_SD + "'" + ',' + "'" + header.ID_CASE_DET + value.ID_CASE_SD + "'," + "'" + value.LP + "'," + "'" + value.ID_CASE_D + "'," + "'" + header.ORIGINAL_LE + "'," + "'" + header.ORIGINAL_QTY + "'," + "'" + value.SONY_PO_QTY + "'" + ')" type="text" value="' + value.SONY_PO_QTY + '" class="txt_new_qty form-control" style="width:50px; height:25px;"/></td>  </tr>');
+                            if (value.ALLOW_MODIFY == "1") {
+                                $('table.table_reason_detail >  tbody.' + header.ID_CASE_DET + ' > tr.' + value.ID_CASE_SD).show();
+                                $('table.table_reason_detail >  tbody.' + header.ID_CASE_DET + ' > tr.' + value.ID_CASE_SD).css('color', '#448aff');
+                            } else {
+                                //$('input#' + header.ID_CASE_DET + value.ID_CASE_SD).hide();
+                                $('input#' + header.ID_CASE_DET + value.ID_CASE_SD).prop("disabled", true);
+                                $('table.table_reason_detail >  tbody.' + header.ID_CASE_DET + ' > tr.' + value.ID_CASE_SD).hide();                      
+                            }
+                            //$('#' + header.ID_CASE_DET + value.ID_CASE_SD).data('#' + header.ID_CASE_DET + value.ID_CASE_SD,value.SONY_PO_QTY);
+                            $("#save").data('#' + header.ID_CASE_DET + value.ID_CASE_SD,value.SONY_PO_QTY);
+                        });
+                        /***************************************************************************/
+                        //table_reason_detail = $('table.table_reason_detail').DataTable({
+                        //    
+                        //    "paging": false,
+                        //    "searching": false,
+                        //    processing: true,
+                        //    bprocessing: true,
+                        //    destroy: true,
+                        //    dom: 'Blfrtip',
+                        //    "scrollY": "470px",
+                        //    "scrollX": false,
+                        //    "scrollCollapse": true,
+                        //    bSort: false,
+                        //});
+                        /****************************************************************************/
+                        tr.addClass('shown');
+                        show_all_rows(table);
+                    }
+                });
+                $("#check_show_all").click(function () {
+                    if ($("#check_show_all").is(':checked')) {
+                        table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                            var header = this.data();
+                            var detail = this.data().GET_SUB_DETAIL_CASE;
+                            $.each(detail, function (index, value) {
+                                $('table.table_reason_detail >  tbody.' + header.ID_CASE_DET + ' > tr.' + value.ID_CASE_SD).show();                 
+                            });
+                        });
+                    }
+                    else {
+                        table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                            var header = this.data();
+                            var detail = this.data().GET_SUB_DETAIL_CASE
+                            $.each(detail, function (index, value) {
+                                if (value.ALLOW_MODIFY == "0") {
+                                    $('table.table_reason_detail >  tbody.' + header.ID_CASE_DET + ' > tr.' + value.ID_CASE_SD).hide();
+                                }
+                            });
+                        });
+                    }
+                });
+                $("#check_expand_all").click(function () {
+                    if ($("#check_expand_all").is(':checked')) {
+                        $(".even").addClass('shown');
+                        $(".odd").addClass('shown');
+                        table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+                            var header = this.data();
+                            var detail = this.data().GET_SUB_DETAIL_CASE;
+                            this.child(format(header)).show();                                                 
+                            $.each(detail, function (index, value) {  
+                                //$('.' + header.ID_CASE_DET).append('<tr class="' + value.ID_CASE_SD + '"><td scope="col">' + value.MODEL + '</td><td scope="col">' + value.SONY_PO + '</td><td scope="col">' + value.PARTNER_NAME + '</td><td scope="col">' + value.STATE + '</td><td scope="col">' + value.RDD + '</td><td scope="col">' + value.LE + '</td><td scope="col">' + value.LE_NEW + '</td><td scope="col">' + value.SONY_PO_QTY + '</td><td scope="col"><input type="text" id="' + header.ID_CASE_DET + value.ID_CASE_SD + '" class="txt_new_qty form-control" style="width:50px;"/></td>  </tr>');
+                                //$('.' + header.ID_CASE_DET).append('<tr class="' + value.ID_CASE_SD + '"><td scope="col">' + value.MODEL + '</td><td scope="col">' + value.SONY_PO + '</td><td scope="col">' + value.PARTNER_NAME + '</td><td scope="col">' + value.STATE + '</td><td scope="col">' + value.RDD + '</td><td scope="col">' + value.LE + '</td><td scope="col"> <label id="lblnewle' + value.ID_CASE_SD + '"></label> </td><td scope="col">' + value.SONY_PO_QTY + '</td> <td scope="col"><input id="' + header.ID_CASE_DET + value.ID_CASE_SD + '"  onkeyup="get_new_le_detail(' + "'" + value.ID_CASE_SD + "'" + ',' + "'" + header.ID_CASE_DET + value.ID_CASE_SD + "'," + "'" + value.LP + "'" + ')" type="text" class="txt_new_qty form-control" style="width:50px; height:25px;"/></td>  </tr>');
+                                //$('.' + header.ID_CASE_DET).append('<tr class="' + value.ID_CASE_SD + '"><td scope="col">' + value.MODEL + '</td><td scope="col">' + value.SONY_PO + '</td><td scope="col">' + value.PARTNER_NAME + '</td><td scope="col">' + value.STATE + '</td><td scope="col">' + value.RDD + '</td><td scope="col">' + value.LE + '</td><td scope="col"> <label id="lblnewle' + value.ID_CASE_SD + '"></label> </td><td scope="col">' + value.SONY_PO_QTY + '</td> <td scope="col"><input id="' + header.ID_CASE_DET + value.ID_CASE_SD + '"  onkeyup="get_new_le_detail(' + "'" + value.ID_CASE_SD + "'" + ',' + "'" + header.ID_CASE_DET + value.ID_CASE_SD + "'," + "'" + value.LP + "'," + "'" + value.ID_CASE_D + "'" + ')" type="text" class="txt_new_qty form-control" style="width:50px; height:25px;"/></td>  </tr>');
+                                //$('.' + header.ID_CASE_DET).append('<tr class="' + value.ID_CASE_SD + '"><td scope="col">' + value.MODEL + '</td><td scope="col">' + value.SONY_PO + '</td><td scope="col">' + value.PARTNER_NAME + '</td><td scope="col">' + value.STATE + '</td><td scope="col">' + value.RDD + '</td><td scope="col">' + value.LE + '</td><td scope="col"> <label id="lblnewle' + value.ID_CASE_SD + '"></label> </td><td scope="col">' + value.SONY_PO_QTY + '</td> <td scope="col"><input id="' + header.ID_CASE_DET + value.ID_CASE_SD + '"  onkeyup="get_new_le_detail(' + "'" + value.ID_CASE_SD + "'" + ',' + "'" + header.ID_CASE_DET + value.ID_CASE_SD + "'," + "'" + value.LP + "'," + "'" + value.ID_CASE_D + "'," + "'" + header.ORIGINAL_LE + "'" + ')" type="text" class="txt_new_qty form-control" style="width:50px; height:25px;"/></td>  </tr>');
+                                //$('.' + header.ID_CASE_DET).append('<tr class="' + value.ID_CASE_SD + '"><td scope="col">' + value.MODEL + '</td><td scope="col">' + value.SONY_PO + '</td><td scope="col">' + value.PARTNER_NAME + '</td><td scope="col">' + value.STATE + '</td><td scope="col">' + value.RDD + '</td><td scope="col">' + value.LE + '</td><td scope="col"> <label id="lblnewle' + value.ID_CASE_SD + '"></label> </td><td scope="col">' + value.SONY_PO_QTY + '</td> <td scope="col"><input id="' + header.ID_CASE_DET + value.ID_CASE_SD + '"  onkeyup="get_new_le_detail(' + "'" + value.ID_CASE_SD + "'" + ',' + "'" + header.ID_CASE_DET + value.ID_CASE_SD + "'," + "'" + value.LP + "'," + "'" + value.ID_CASE_D + "'," + "'" + header.ORIGINAL_LE + "'," + "'" + header.ORIGINAL_QTY + "'" + ')" type="text" class="txt_new_qty form-control" style="width:50px; height:25px;"/></td>  </tr>');
+                                $('.' + header.ID_CASE_DET).append('<tr class="' + value.ID_CASE_SD + '"><td scope="col">' + value.MODEL + '</td><td scope="col">' + value.SONY_PO + '</td><td scope="col">' + value.PARTNER_NAME + '</td><td scope="col">' + value.STATE + '</td><td scope="col">' + value.RDD + '</td><td scope="col">' + value.LE + '</td><td scope="col"> <label id="lblnewle' + value.ID_CASE_SD + '"></label> </td><td scope="col">' + value.SONY_PO_QTY + '</td> <td scope="col"><input id="' + header.ID_CASE_DET + value.ID_CASE_SD + '"  onkeyup="get_new_le_detail(' + "'" + value.ID_CASE_SD + "'" + ',' + "'" + header.ID_CASE_DET + value.ID_CASE_SD + "'," + "'" + value.LP + "'," + "'" + value.ID_CASE_D + "'," + "'" + header.ORIGINAL_LE + "'," + "'" + header.ORIGINAL_QTY + "'," + "'" + value.SONY_PO_QTY + "'" + ')" type="text" value="' + value.SONY_PO_QTY + '" class="txt_new_qty form-control" style="width:50px; height:25px;"/></td>  </tr>');
+                                if (value.ALLOW_MODIFY == "1") {
+                                    $('table.table_reason_detail >  tbody.' + header.ID_CASE_DET + ' > tr.' + value.ID_CASE_SD).show();
+                                    $('table.table_reason_detail >  tbody.' + header.ID_CASE_DET + ' > tr.' + value.ID_CASE_SD).css('color', '#448aff');
+
+                                } else {
+                                    //$('input#' + header.ID_CASE_DET + value.ID_CASE_SD).hide();
+                                    $('input#' + header.ID_CASE_DET + value.ID_CASE_SD).prop("disabled", true);
+                                    $('table.table_reason_detail >  tbody.' + header.ID_CASE_DET + ' > tr.' + value.ID_CASE_SD).hide();                        
+                                }
+
+                            });
+                            show_all_rows(table);
+                        });
+                    } else {
+                        $(".even").removeClass('shown');
+                        $(".odd").removeClass('shown');
+                        table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                            if (this.child.isShown()) {
+                                this.child.hide();
+                            }
+                        });
+                    }
+                });               
+            });
+            function format(d) {
+                var detail_table = '';
+                detail_table += '<table class="display table table_reason_detail" style="width:100%">';
+                detail_table += '<thead>';
+                detail_table += '<tr>'
+                detail_table += '<th scope="col">Model</th>';//'<th scope="col">Do Detail</th>';
+                detail_table += '<th scope="col">Sony PO</th>';//'<th scope="col">Part Number</th>';
+                detail_table += '<th scope="col">PartnerName</th>';//'<th scope="col">Model</th>';
+                detail_table += '<th scope="col">State </th>';//'<th scope="col">Sony PO</th>';
+                detail_table += '<th scope="col">RDD</th>';//'<th scope="col">LE</th>';
+                detail_table += '<th scope="col">LE</th>';//'<th scope="col">Qty</th>';
+                detail_table += '<th scope="col">New LE</th>';//'<th scope="col">RDD</th>';
+                detail_table += '<th scope="col">QTY</th>';//'<th scope="col">PartnerName</th>';
+                detail_table += '<th scope="col">New QTY</th>';//'<th scope="col">State </th>';
+                detail_table += '</tr>';
+                detail_table += '</thead>';
+                detail_table += '<tbody class="' + d.ID_CASE_DET + '">';
+                detail_table += '</tbody>';
+                detail_table += '</table>';
+                return detail_table;
+            }
+
+            function show_all_rows(table) {
+                if ($("#check_show_all").is(':checked')) {
+                    table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                        var header = this.data();
+                        var detail = this.data().GET_SUB_DETAIL_CASE;
+                        $.each(detail, function (index, value) {
+                            $('table.table_reason_detail >  tbody.' + header.ID_CASE_DET + ' > tr.' + value.ID_CASE_SD).show();               
+                        });
+                    });
+                }
+                else {
+                    table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                        var header = this.data();
+                        var detail = this.data().GET_SUB_DETAIL_CASE
+                        $.each(detail, function (index, value) {
+                            if (value.ALLOW_MODIFY == "0") {
+                                $('table.table_reason_detail >  tbody.' + header.ID_CASE_DET + ' > tr.' + value.ID_CASE_SD).hide();
+                            }
+                        });
+                    });
+                }
+            }
+            function expand_all_rows(table) {
+                if ($("#check_expand_all").is(':checked')) {
+                    $(".even").addClass('shown');
+                    $(".odd").addClass('shown');
+                    table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                        var header = this.data();
+                        var detail = this.data().GET_SUB_DETAIL_CASE;
+                        this.child(format(header)).show();
+                        $.each(detail, function (index, value) {               
+                            //$('.' + header.ID_CASE_DET).append('<tr class="' + value.ID_CASE_SD + '"><td scope="col">' + value.MODEL + '</td><td scope="col">' + value.SONY_PO + '</td><td scope="col">' + value.PARTNER_NAME + '</td><td scope="col">' + value.STATE + '</td><td scope="col">' + value.RDD + '</td><td scope="col">' + value.LE + '</td><td scope="col">' + value.LE_NEW + '</td><td scope="col">' + value.SONY_PO_QTY + '</td><td scope="col"><input type="text" id="' + header.ID_CASE_DET + value.ID_CASE_SD + '" class="txt_new_qty form-control" style="width:50px;"/></td>  </tr>');
+                            //$('.' + header.ID_CASE_DET).append('<tr class="' + value.ID_CASE_SD + '"><td scope="col">' + value.MODEL + '</td><td scope="col">' + value.SONY_PO + '</td><td scope="col">' + value.PARTNER_NAME + '</td><td scope="col">' + value.STATE + '</td><td scope="col">' + value.RDD + '</td><td scope="col">' + value.LE + '</td><td scope="col"> <label id="lblnewle' + value.ID_CASE_SD + '"></label> </td><td scope="col">' + value.SONY_PO_QTY + '</td> <td scope="col"><input id="' + header.ID_CASE_DET + value.ID_CASE_SD + '"  onkeyup="get_new_le_detail(' + "'" + value.ID_CASE_SD + "'" + ',' + "'" + header.ID_CASE_DET + value.ID_CASE_SD + "'," + "'" + value.LP + "'," + "'" + value.ID_CASE_D + "'" + ')" type="text" class="txt_new_qty form-control" style="width:50px; height:25px;"/></td>  </tr>');
+                            //$('.' + header.ID_CASE_DET).append('<tr class="' + value.ID_CASE_SD + '"><td scope="col">' + value.MODEL + '</td><td scope="col">' + value.SONY_PO + '</td><td scope="col">' + value.PARTNER_NAME + '</td><td scope="col">' + value.STATE + '</td><td scope="col">' + value.RDD + '</td><td scope="col">' + value.LE + '</td><td scope="col"> <label id="lblnewle' + value.ID_CASE_SD + '"></label> </td><td scope="col">' + value.SONY_PO_QTY + '</td> <td scope="col"><input id="' + header.ID_CASE_DET + value.ID_CASE_SD + '"  onkeyup="get_new_le_detail(' + "'" + value.ID_CASE_SD + "'" + ',' + "'" + header.ID_CASE_DET + value.ID_CASE_SD + "'," + "'" + value.LP + "'," + "'" + value.ID_CASE_D + "'," + "'" + header.ORIGINAL_LE + "'" + ')" type="text" class="txt_new_qty form-control" style="width:50px; height:25px;"/></td>  </tr>');
+                            //$('.' + header.ID_CASE_DET).append('<tr class="' + value.ID_CASE_SD + '"><td scope="col">' + value.MODEL + '</td><td scope="col">' + value.SONY_PO + '</td><td scope="col">' + value.PARTNER_NAME + '</td><td scope="col">' + value.STATE + '</td><td scope="col">' + value.RDD + '</td><td scope="col">' + value.LE + '</td><td scope="col"> <label id="lblnewle' + value.ID_CASE_SD + '"></label> </td><td scope="col">' + value.SONY_PO_QTY + '</td> <td scope="col"><input id="' + header.ID_CASE_DET + value.ID_CASE_SD + '"  onkeyup="get_new_le_detail(' + "'" + value.ID_CASE_SD + "'" + ',' + "'" + header.ID_CASE_DET + value.ID_CASE_SD + "'," + "'" + value.LP + "'," + "'" + value.ID_CASE_D + "'," + "'" + header.ORIGINAL_LE + "'," + "'" + header.ORIGINAL_QTY + "'" + ')" type="text" class="txt_new_qty form-control" style="width:50px; height:25px;"/></td>  </tr>');
+                            $('.' + header.ID_CASE_DET).append('<tr class="' + value.ID_CASE_SD + '"><td scope="col">' + value.MODEL + '</td><td scope="col">' + value.SONY_PO + '</td><td scope="col">' + value.PARTNER_NAME + '</td><td scope="col">' + value.STATE + '</td><td scope="col">' + value.RDD + '</td><td scope="col">' + value.LE + '</td><td scope="col"> <label id="lblnewle' + value.ID_CASE_SD + '"></label> </td><td scope="col">' + value.SONY_PO_QTY + '</td> <td scope="col"><input id="' + header.ID_CASE_DET + value.ID_CASE_SD + '"  onkeyup="get_new_le_detail(' + "'" + value.ID_CASE_SD + "'" + ',' + "'" + header.ID_CASE_DET + value.ID_CASE_SD + "'," + "'" + value.LP + "'," + "'" + value.ID_CASE_D + "'," + "'" + header.ORIGINAL_LE + "'," + "'" + header.ORIGINAL_QTY + "'," + "'" + value.SONY_PO_QTY + "'" + ')" type="text" class="txt_new_qty form-control" style="width:50px; height:25px;"/></td>  </tr>');
+                            if (value.ALLOW_MODIFY == "1") {
+                                $('table.table_reason_detail >  tbody.' + header.ID_CASE_DET + ' > tr.' + value.ID_CASE_SD).show();
+                                $('table.table_reason_detail >  tbody.' + header.ID_CASE_DET + ' > tr.' + value.ID_CASE_SD).css('color', '#448aff');
+
+                            } else {
+                                $('input#' + header.ID_CASE_DET + value.ID_CASE_SD).hide();
+                                $('table.table_reason_detail >  tbody.' + header.ID_CASE_DET + ' > tr.' + value.ID_CASE_SD).hide();                  
+                            }
+                        });
+                    });
+                    show_all_rows(table);
+                } else {
+                    $(".even").removeClass('shown');
+                    $(".odd").removeClass('shown');
+                    table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                        if (this.child.isShown()) {
+                            this.child.hide();
+                        }
+                    });
+                }
+            }
+            function get_new_le_detail(id_case_sd, id_new_qty, lp, id_case_d,original_le_h,original_qty_h, original_qty_d) {
+                var new_qty_d = $('#' + id_new_qty).val();
+                var new_le_d = $('#lblnewle' + id_case_sd).text(((new_qty_d / lp) * 100) + '%');
+
+                //alert("ok1")
+                /****************************08/05/2019**************************************************/
+                var new_qty_total = 0;
+                $('table.table_reason_detail >  tbody.' + id_case_d).find('tr').each(function (idx, row) {
+                    //var new_qty_t = $("td:eq(1) input:text", row).val();
+                    //console.log(row);
+                    var new_qty_t = $("td:eq(8) input:text", row).val();
+                    new_qty_total += parseInt(new_qty_t);                   
+                });
+                $('#lblnewqtyheader' + id_case_d).text(new_qty_total);
+                //console.log(new_qty_total);
+                /******************************************************************************************/
+                /*var new_le_d_val = ((new_qty_d / lp) * 100);
+                var new_le_h_val = $('#lblnewleheader' + id_case_d).text();       
+                if (new_le_d_val <= 0) {
+                    var new_le_h = $('#lblnewleheader' + id_case_d).text(original_le_h);
+                }else {
+                    var new_le_h_total = (new_le_h_val - new_le_d_val);
+                    var new_le_h = $('#lblnewleheader' + id_case_d).text(new_le_h_total.toFixed(2));
+                }
+                var new_qty_h_val = $('#lblnewqtyheader' + id_case_d).text();   
+                if (new_qty_h_val <= 0 || new_qty_d <= 0) {
+                    var new_qty_h = $('#lblnewqtyheader' + id_case_d).text(original_qty_h)
+                } else {
+                    var new_qty_h_total = (new_qty_h_val - new_qty_d);
+                    var new_qty_h = $('#lblnewqtyheader' + id_case_d).text(new_qty_h_total);
+                }*/
+
+                //validate_qty_detail(original_qty_d, new_qty_d, id_new_qty);
+
+                
+            }
+            //console.log(table);
+        </script>
+</boby>
+</html>
