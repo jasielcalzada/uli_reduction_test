@@ -57,14 +57,18 @@ $(document).ready(function () {
             $.each(openRows,function(index,value){ 
                 //console.log('valor en array ' + JSON.stringify(value[0]["_DT_RowIndex"] ) + ' valor de row ' + index_row);
 
-                if(JSON.stringify(value[0]["_DT_RowIndex"]) === index_row){
-                    console.log('valor en array ' + JSON.stringify(value[0]["_DT_RowIndex"] ) + ' valor de row ' + index_row);
+                //console.log(typeof(String(index_row)));
+                //console.log(typeof(JSON.stringify(value[0]["_DT_RowIndex"])));
+
+                if(JSON.stringify(value[0]["_DT_RowIndex"]) === String(index_row)){
+                    //console.log('valor en array ' + JSON.stringify(value[0]["_DT_RowIndex"] ) + ' valor de row ' + index_row);
                     //count += 1;
-                    //openRows.splice(index);
+                    //openRows.splice(index,1);
                     console.log('delete in array');
-                }else{
-                    console.log('no hay valores que eliminar')
                 }
+                //else{
+                    //console.log('no hay valores que eliminar')
+                //}
             });               
             console.log("restantes en array " + JSON.stringify(openRows))
             /******************************************************************** */
