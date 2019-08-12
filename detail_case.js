@@ -44,11 +44,30 @@ $(document).ready(function () {
 
 
         if (row.child.isShown()) {
-            //PENDINETE ELIMINAR DEL ARREGLO LOS ROW COLAPSADOS MANUALMENTE
-
             // This row is already open - close it
+            //console.log(openRows);
             row.child.hide();
             tr.removeClass('shown');
+
+
+             //PENDINETE ELIMINAR DEL ARREGLO LOS ROW COLAPSADOS MANUALMENTE
+            /*****   11/08/2019      meterlo en un metodo    falta hacer pruevas ************************************************************/
+            var index_row = table.row(tr).index();
+            //console.log('objeto' + JSON.stringify(openRows));
+            $.each(openRows,function(index,value){ 
+                //console.log('valor en array ' + JSON.stringify(value[0]["_DT_RowIndex"] ) + ' valor de row ' + index_row);
+
+                if(JSON.stringify(value[0]["_DT_RowIndex"]) === index_row){
+                    console.log('valor en array ' + JSON.stringify(value[0]["_DT_RowIndex"] ) + ' valor de row ' + index_row);
+                    //count += 1;
+                    //openRows.splice(index);
+                    console.log('delete in array');
+                }else{
+                    console.log('no hay valores que eliminar')
+                }
+            });               
+            console.log("restantes en array " + JSON.stringify(openRows))
+            /******************************************************************** */
         } else {          
             // Open this row
             var header = row.data();
@@ -82,7 +101,10 @@ $(document).ready(function () {
             //}else{
             //    alert('this index exist in Array' + index);//comentar al publicar
             //}
-            /***********08/10/2019*************************/
+
+
+
+            /***********08/11/2019*************************/
             
             var index_row = table.row(tr).index();
             var count = 0;
@@ -93,15 +115,17 @@ $(document).ready(function () {
                 $.each(openRows,function(index,value){
                     if(value[0]["_DT_RowIndex"] === index_row){
                         count += 1;
-                    }
-                    if(count === 0){
-                        openRows.push(tr);
-                    }
+                    }                  
                 });
+                if(count === 0){
+                    openRows.push(tr);
+                }
             }
-    
-            //console.log(JSON.stringify(openRows))
+            console.log('countador de valores iguales: '+ count);
+            console.log('En Array ' + JSON.stringify(openRows))
             /****************************************************************************/
+
+
                       
             show_all_rows(table);
             get_data_detail_row_table();
@@ -567,7 +591,10 @@ function get_new_le_detail(id_case_sd, id_new_qty, lp, id_case_d, original_le_h,
     save_data_detail_row_table(id_new_qty, new_qty_d, id_case_d, id_case_sd,"");
 
     //PENDINETE condicinar si el checkbox expandir esta check no ejecute el expand all
-    expand_all_rows(table); ///exapande todo cada que tecleo
+    if ($("#check_expand_all").prop('checked')==false) {
+        //alert('ok')
+        expand_all_rows(table); ///exapande todo cada que tecleo
+    }
 
 
     var t_new_le_d = parseFloat(((new_qty_d / usage_qty) * max_percentage_mix));
@@ -618,9 +645,12 @@ function get_new_le_detail(id_case_sd, id_new_qty, lp, id_case_d, original_le_h,
 
     /** ***********10/08/2019****************/
     //PENDIENTE condicinar si el checkbox expandir esta check no ejecute el expand all
-    collapsed_all_rows(table);
-    closeOpenedRows(table);
-    set_focus_txtbox_detail_new_qty(id_new_qty);
+    if ($("#check_expand_all").prop('checked')==false) {
+        //alert('ok')
+        collapsed_all_rows(table);
+        closeOpenedRows(table);
+        set_focus_txtbox_detail_new_qty(id_new_qty);
+    }
     /** **************************/
 
 }
@@ -684,6 +714,10 @@ function collapsed_all_rows(table){
 
 function set_focus_txtbox_detail_new_qty(id_new_qty){
     $('#' + id_new_qty).focus();
+}
+
+function remove_rows_on_array(){
+
 }
 /********************************************************* */
 
